@@ -1,0 +1,3 @@
+# Panel interno de staff: no debe aparecer en buscadores.
+User-agent: *
+Disallow: /

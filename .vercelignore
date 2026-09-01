@@ -1,0 +1,5 @@
+# El panel es estático: a Vercel solo suben index.html, css/, js/ y assets/.
+Dockerfile
+README.md
+.gitignore
+*.log
