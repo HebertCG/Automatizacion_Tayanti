@@ -13,6 +13,7 @@ WhatsApp Cloud API  ──►  n8n (agente IA + automatizaciones)  ──►  Su
 ```
 
 ---
+<img width="1083" height="310" alt="image" src="https://github.com/user-attachments/assets/4d8a68ef-09ae-4c3d-972a-83421e9aefb9" />
 
 ## Demo en vivo
 
