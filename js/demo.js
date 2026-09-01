@@ -4,15 +4,29 @@
 // para enseñar el panel funcionando (a un cliente, en el portafolio) sin
 // exponer los nombres ni los teléfonos reales de los comensales.
 
-// ¿Estamos en modo demo? Se resuelve una sola vez al cargar la página.
-export const DEMO = new URLSearchParams(location.search).has('demo');
-
 // Credenciales del demo. Son públicas a propósito: no abren nada, el modo demo
 // las valida aquí mismo, en el navegador, contra estos dos strings.
 export const CREDENCIALES_DEMO = {
   email: 'demo@tayanti.pe',
   password: 'TayantiDemo2026',
 };
+
+// El demo arranca activo si la URL trae `?demo=1`…
+const DEMO_EN_URL = new URLSearchParams(location.search).has('demo');
+let demoActivo = DEMO_EN_URL;
+
+// …pero también se enciende si alguien entra con las credenciales del demo
+// desde la URL normal. Sin esto, quien copia las credenciales del README y
+// las usa en la URL de siempre choca contra Supabase y recibe un
+// "correo o contraseña incorrectos" que no explica nada.
+export const esDemo = () => demoActivo;
+export const demoEnLaUrl = () => DEMO_EN_URL;
+export const activarDemo = () => { demoActivo = true; };
+
+// ¿Este par de credenciales es el del demo?
+export const sonCredencialesDemo = (email, password) =>
+  email.trim().toLowerCase() === CREDENCIALES_DEMO.email
+  && password === CREDENCIALES_DEMO.password;
 
 // Días de historial hacia atrás y de reservas futuras que genera el demo.
 const DIAS_ATRAS = 75;

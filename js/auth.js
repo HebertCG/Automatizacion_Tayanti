@@ -1,12 +1,8 @@
 import { sb } from './supabase.js';
 import { $ } from './ui.js';
-import { DEMO, CREDENCIALES_DEMO } from './demo.js';
-
-// Valida el login del modo demo contra las credenciales publicadas, sin red.
-function loginDemo(email, password) {
-  return email.toLowerCase() === CREDENCIALES_DEMO.email
-    && password === CREDENCIALES_DEMO.password;
-}
+import {
+  CREDENCIALES_DEMO, esDemo, demoEnLaUrl, activarDemo, sonCredencialesDemo,
+} from './demo.js';
 
 // Pista visible en la pantalla de login del demo, con las credenciales ya
 // escritas en los campos para que entrar sea un solo clic.
@@ -23,10 +19,24 @@ function pintarPistaDemo() {
   $('loginForm').insertBefore(pista, $('loginBtn'));
 }
 
+// Resuelve el login. Las credenciales del demo entran siempre, vengan de
+// `?demo=1` o de la URL normal; el resto va contra Supabase.
+async function autenticar(email, password) {
+  if (sonCredencialesDemo(email, password)) {
+    activarDemo();
+    return true;
+  }
+  // Dentro del demo no hay Supabase contra quien validar.
+  if (esDemo()) return false;
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  return !error;
+}
+
 // Conecta el formulario de login y el botón de cerrar sesión.
 // `onAuthChange(estaLogueado)` se llama cada vez que cambia la sesión.
 export function setupAuth(onAuthChange) {
-  if (DEMO) pintarPistaDemo();
+  if (demoEnLaUrl()) pintarPistaDemo();
 
   $('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -34,11 +44,7 @@ export function setupAuth(onAuthChange) {
     $('loginBtn').disabled = true;
     $('loginBtn').textContent = 'Ingresando…';
 
-    const email = $('email').value.trim();
-    const password = $('password').value;
-    const ok = DEMO
-      ? loginDemo(email, password)
-      : !(await sb.auth.signInWithPassword({ email, password })).error;
+    const ok = await autenticar($('email').value, $('password').value);
 
     $('loginBtn').disabled = false;
     $('loginBtn').textContent = 'Ingresar';
@@ -50,7 +56,7 @@ export function setupAuth(onAuthChange) {
   });
 
   $('logoutBtn').addEventListener('click', async () => {
-    if (!DEMO) await sb.auth.signOut();
+    if (!esDemo()) await sb.auth.signOut();
     onAuthChange(false);
   });
 }
@@ -58,7 +64,7 @@ export function setupAuth(onAuthChange) {
 // Indica si hay una sesión activa al cargar la página.
 // En demo siempre arranca en el login, para que se vea el flujo completo.
 export async function haySesion() {
-  if (DEMO) return false;
+  if (esDemo()) return false;
   const { data } = await sb.auth.getSession();
   return Boolean(data.session);
 }

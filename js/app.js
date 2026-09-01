@@ -6,11 +6,12 @@ import { renderRegistro } from './registro.js';
 import { setupAuth, haySesion } from './auth.js';
 import { setupAcciones } from './actions.js';
 import { iniciarTiempoReal, detenerTiempoReal } from './realtime.js';
-import { DEMO } from './demo.js';
+import { esDemo } from './demo.js';
 
 // Distintivo en la barra superior para que nadie confunda el demo con el
 // panel real del restaurante.
 function marcarDemo() {
+  if (document.querySelector('.demo-badge')) return;
   const badge = document.createElement('span');
   badge.className = 'demo-badge';
   badge.textContent = 'Modo demo';
@@ -53,11 +54,14 @@ function setupNav() {
 function mostrarApp(logueado) {
   $('app').hidden = !logueado;
   $('login').style.display = logueado ? 'none' : 'flex';
-  if (logueado) { iniciarTiempoReal(cargar); cargar(); }
+  if (logueado) {
+    // El demo puede activarse al iniciar sesion, no solo desde la URL.
+    if (esDemo()) marcarDemo();
+    iniciarTiempoReal(cargar);
+    cargar();
+  }
   else { detenerTiempoReal(); }
 }
-
-if (DEMO) marcarDemo();
 
 setupAuth(mostrarApp);
 setupAcciones(cargar);

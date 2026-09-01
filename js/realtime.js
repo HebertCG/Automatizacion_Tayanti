@@ -1,6 +1,6 @@
 import { sb } from './supabase.js';
 import { REFRESH_MS } from './config.js';
-import { DEMO, simularReservaEntrante } from './demo.js';
+import { esDemo, simularReservaEntrante } from './demo.js';
 import { toast } from './ui.js';
 
 // Cada cuánto entra una reserva simulada en el modo demo (ms).
@@ -17,7 +17,7 @@ export function iniciarTiempoReal(onCambio) {
 
   // En demo no hay Supabase: se simulan las reservas que iría tomando el bot,
   // para que se vea llegar una sola, igual que en producción.
-  if (DEMO) {
+  if (esDemo()) {
     if (!demoTimer) {
       demoTimer = setInterval(() => {
         const nueva = simularReservaEntrante();

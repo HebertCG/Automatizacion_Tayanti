@@ -16,20 +16,23 @@ WhatsApp Cloud API  ──►  n8n (agente IA + automatizaciones)  ──►  Su
 
 ## Demo en vivo
 
-**▶ [Abrir el demo](https://tayanti-panel.vercel.app/?demo=1)** ← reemplaza el
-dominio por el que te asigne Vercel al desplegar.
+**▶ [automatizacion-tayanti.vercel.app/?demo=1](https://automatizacion-tayanti.vercel.app/?demo=1)**
 
 | | |
 |---|---|
 | **Usuario** | `demo@tayanti.pe` |
 | **Contraseña** | `TayantiDemo2026` |
 
-El modo demo se activa con `?demo=1` en la URL y **no se conecta a la base de
-datos real**: genera unas 370 reservas ficticias en tu propio navegador, con
-~75 días de historial y una semana por delante. Todo funciona igual que en
-producción —KPIs, gráficos, filtros, cambios de estado, el Registro mensual y la
-exportación a CSV— y cada 35 segundos entra una reserva simulada para que veas
-el comportamiento en tiempo real.
+Con `?demo=1` las credenciales vienen ya escritas y basta pulsar **Ingresar**.
+También funcionan escribiéndolas a mano en
+[la URL normal](https://automatizacion-tayanti.vercel.app): entrar con ellas
+enciende el modo demo, se pongan donde se pongan.
+
+El demo **no se conecta a la base de datos real**: genera unas 370 reservas
+ficticias en tu propio navegador, con ~75 días de historial y una semana por
+delante. Todo funciona igual que en producción —KPIs, gráficos, filtros, cambios
+de estado, el Registro mensual y la exportación a CSV— y cada 35 segundos entra
+una reserva simulada para que veas el comportamiento en tiempo real.
 
 Las credenciales de arriba son públicas a propósito: **no abren nada**. El modo
 demo las valida en el navegador contra dos strings de `js/demo.js`; no existe
