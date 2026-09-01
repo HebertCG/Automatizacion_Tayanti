@@ -6,6 +6,17 @@ import { renderRegistro } from './registro.js';
 import { setupAuth, haySesion } from './auth.js';
 import { setupAcciones } from './actions.js';
 import { iniciarTiempoReal, detenerTiempoReal } from './realtime.js';
+import { DEMO } from './demo.js';
+
+// Distintivo en la barra superior para que nadie confunda el demo con el
+// panel real del restaurante.
+function marcarDemo() {
+  const badge = document.createElement('span');
+  badge.className = 'demo-badge';
+  badge.textContent = 'Modo demo';
+  badge.title = 'Datos ficticios generados en el navegador. No hay conexion con la base real.';
+  document.querySelector('.top-right').prepend(badge);
+}
 
 // Trae los datos y repinta panel + registro. Si falla, avisa al staff.
 async function cargar() {
@@ -45,6 +56,8 @@ function mostrarApp(logueado) {
   if (logueado) { iniciarTiempoReal(cargar); cargar(); }
   else { detenerTiempoReal(); }
 }
+
+if (DEMO) marcarDemo();
 
 setupAuth(mostrarApp);
 setupAcciones(cargar);

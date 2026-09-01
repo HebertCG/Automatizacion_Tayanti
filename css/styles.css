@@ -158,5 +158,12 @@ tbody tr:hover { background: var(--surface-2); }
 .toast.err { background: var(--red); }
 
 @media (max-width: 820px) { .grid2 { grid-template-columns: 1fr; } .kpi .value { font-size: 30px; } }
+/* Modo demo */
+.demo-hint { background: var(--accent-bg); border: 1px dashed var(--accent-soft); border-radius: 11px; padding: 12px 14px; margin: 4px 0 14px; text-align: left; display: flex; flex-direction: column; gap: 2px; animation: fadeIn .5s ease both; }
+.demo-hint strong { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.demo-hint span { font-size: 13px; color: var(--text); font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+.demo-hint em { font-size: 11px; color: var(--muted); font-style: normal; margin-top: 5px; }
+.demo-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-soft); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; white-space: nowrap; }
+
 @media (max-width: 540px) { #app { padding: 18px 14px 40px; } .brand h1 { font-size: 19px; } .live span.txt { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
